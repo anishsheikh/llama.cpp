@@ -13,9 +13,19 @@
 
 #include <stdio.h>
 #include <fcntl.h>
-#include <unistd.h>
 #include <string.h>
+
+#if defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
+#include <signal.h>
 #include <unistd.h>
+#elif defined (_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#include <signal.h>
+#endif
 
 enum split_operation : uint8_t {
     SPLIT_OP_SPLIT,
